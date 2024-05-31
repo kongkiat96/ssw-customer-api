@@ -1,20 +1,16 @@
-# ใช้ official Python image
+# ใช้ base image ของ Python 3.9
 FROM python:3.9
 
-# ตั้ง working directory
+# กำหนด working directory
 WORKDIR /app
 
-# คัดลอก requirements.txt ไปยัง working directory
+# คัดลอกไฟล์ requirements.txt และติดตั้ง dependencies
 COPY requirements.txt .
 
-# ติดตั้ง dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# คัดลอก source code ไปยัง working directory
+# คัดลอกซอร์สโค้ดของโปรเจคไปยัง Docker image
 COPY . .
 
-# เปิด port ที่จะใช้ในการสื่อสารกับ container
-EXPOSE 8000
-
-# คำสั่งเพื่อรัน FastAPI application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# ระบุคำสั่งเพื่อรันแอปพลิเคชัน
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
